@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Java или Bedrock? Какую версию Minecraft купить</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dirt-a:#7a5533;--dirt-b:#6b4a2b;--grass:#5fa83a;--grass-d:#3f7a24;
+  --stone-a:#8f8f8f;--stone-b:#7d7d7d;--stone-hi:#c6c6c6;--stone-lo:#555;--ink:#1c1c1c;
+  --java:#d2662b;--bedrock:#3b78c9;--gold:#ffd23f;--paper:#f2f2f2;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --s:clamp(64px,19vw,140px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--dirt-a:#5d4228;--dirt-b:#4f3720;--stone-a:#7c7c7c;--stone-b:#6c6c6c;--ink:#141414}}
+:root[data-theme="dark"]{--dirt-a:#5d4228;--dirt-b:#4f3720;--stone-a:#7c7c7c;--stone-b:#6c6c6c;--ink:#141414}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:"Pixelify Sans","Courier New",monospace;font-size:18px;line-height:1.45;color:var(--ink);
+  background-color:var(--dirt-b);
+  background-image:conic-gradient(var(--dirt-a) 25%,var(--dirt-b) 0 50%,var(--dirt-a) 0 75%,var(--dirt-b) 0);
+  background-size:40px 40px;image-rendering:pixelated}
+.wrap{max-width:1040px;margin:0 auto;padding:0 14px 40px}
+h1,h2,h3,.px{font-family:"Press Start 2P","Courier New",monospace;font-weight:400}
+
+/* grass strip */
+.grass{height:28px;background:var(--grass);border-bottom:8px solid var(--grass-d);
+  background-image:conic-gradient(var(--grass) 25%,#6cb843 0 50%,var(--grass) 0 75%,#56983a 0);background-size:28px 28px}
+
+/* HEADER — separate block, tools rise out of it */
+header{position:relative;margin-top:calc(var(--s)*.75)}
+.tools{position:absolute;left:0;right:0;top:0;height:0;z-index:1;pointer-events:none}
+.tools svg{position:absolute;top:calc(var(--s)*-.68);width:var(--s);height:var(--s);shape-rendering:crispEdges;
+  filter:drop-shadow(5px 5px 0 rgba(0,0,0,.35))}
+.hbox{position:relative;z-index:2;text-align:center;padding:34px 14px 28px;color:#fff;
+  background-color:#3a3a3a;background-image:conic-gradient(#444 25%,#383838 0 50%,#444 0 75%,#383838 0);background-size:32px 32px;
+  border:6px solid #111;box-shadow:inset 6px 6px 0 #6a6a6a,inset -6px -6px 0 #262626,10px 10px 0 rgba(0,0,0,.4)}
+.hbox h1{margin:0;font-size:clamp(20px,6.2vw,54px);line-height:1.25;letter-spacing:1px;
+  text-shadow:4px 4px 0 #000,0 0 0 #000}
+.hbox h1 .j{color:var(--java)}.hbox h1 .b{color:#6fb0ff}.hbox h1 .v{color:var(--gold);font-size:.55em;display:inline-block;margin:0 .3em}
+.hbox p{margin:16px auto 0;max-width:34em;font-size:clamp(17px,3.6vw,22px);color:#ececec;text-shadow:2px 2px 0 #000}
+
+/* panels */
+.panel{margin-top:34px;padding:20px 18px;background-color:var(--stone-a);
+  background-image:conic-gradient(var(--stone-a) 25%,var(--stone-b) 0 50%,var(--stone-a) 0 75%,var(--stone-b) 0);background-size:24px 24px;
+  border:5px solid #1a1a1a;box-shadow:inset 5px 5px 0 var(--stone-hi),inset -5px -5px 0 var(--stone-lo),8px 8px 0 rgba(0,0,0,.35)}
+.panel>h2{margin:0 0 16px;font-size:clamp(14px,3.6vw,20px);line-height:1.4;text-shadow:2px 2px 0 rgba(255,255,255,.35)}
+
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:700px){.duo{grid-template-columns:1fr}}
+.card{background:var(--paper);border:4px solid #1a1a1a;box-shadow:inset 4px 4px 0 #fff,inset -4px -4px 0 #bdbdbd}
+.card h3{margin:0;padding:14px 12px;font-size:clamp(14px,3.5vw,18px);color:#fff;text-shadow:3px 3px 0 rgba(0,0,0,.5);border-bottom:4px solid #1a1a1a}
+.card.java h3{background:var(--java)}.card.bedrock h3{background:var(--bedrock)}
+.card ul{margin:0;padding:12px 14px 14px 34px}
+.card li{margin:6px 0}
+.card li::marker{content:"■ ";color:#555}
+
+/* table */
+.scroll{overflow-x:auto;border:4px solid #1a1a1a;background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:17px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border:3px solid #1a1a1a}
+thead th{font-family:"Press Start 2P",monospace;font-weight:400;font-size:13px;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+thead th.j{background:var(--java)}thead th.b{background:var(--bedrock)}thead th:first-child{background:#444}
+tbody th{background:#dcdcdc;font-weight:600;width:20%}
+tbody tr:nth-child(even) td{background:#ebebeb}
+.win{background:#cdeeb4!important}
+
+.tabs{display:flex;gap:10px;margin-bottom:14px}
+.tabs .btn{flex:1;font-family:"Press Start 2P","Courier New",monospace;font-size:14px;line-height:1.4;justify-content:center;text-align:center}
+#tj[aria-selected="true"]{background:var(--java);box-shadow:inset 3px 3px 0 #f0a574,inset -3px -3px 0 #8a3a12}
+#tb[aria-selected="true"]{background:var(--bedrock);box-shadow:inset 3px 3px 0 #8cb6ee,inset -3px -3px 0 #1f4a8a}
+.row{display:grid;grid-template-columns:11em 1fr;border-top:3px solid #1a1a1a}
+.row dt{margin:0;padding:10px 12px;background:#dcdcdc;font-weight:600}
+.row dd{margin:0;padding:10px 12px}
+@media (max-width:560px){.row{grid-template-columns:1fr}.row dt{padding-bottom:2px}.row dd{padding-top:4px}}
+/* wizard */
+.q{margin:0 0 12px;font-size:20px;font-weight:600}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.btn{font:inherit;font-size:18px;color:#fff;cursor:pointer;padding:12px 16px;min-height:48px;text-shadow:2px 2px 0 #3f3f3f;
+  background:#8b8b8b;border:4px solid #000;box-shadow:inset 3px 3px 0 #c9c9c9,inset -3px -3px 0 #5c5c5c}
+.btn:hover,.btn:focus-visible{background:#7b87d0;outline:none;box-shadow:inset 3px 3px 0 #b9c1f2,inset -3px -3px 0 #4d57a0}
+.btn:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
+.btn:active{transform:translate(2px,2px)}
+a.btn{display:inline-flex;align-items:center;text-decoration:none}
+.res{margin-top:14px;padding:14px;background:var(--paper);border:4px solid #1a1a1a;display:none}
+.res.on{display:block}
+.res h3{margin:0 0 8px;font-size:15px;line-height:1.5}
+.res .tag{display:inline-block;padding:4px 8px;color:#fff;font-size:13px;font-family:"Press Start 2P",monospace;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+.reset{margin-top:12px;font-size:16px;padding:8px 12px;min-height:40px}
+
+footer{margin-top:34px;padding:14px;color:#fff;text-align:center;font-size:15px;background:rgba(0,0,0,.55);border:4px solid #111}
+@media (prefers-reduced-motion:no-preference){.tools svg{transition:transform .2s steps(3)}header:hover .tools svg{transform:translateY(-6px) var(--r,)}}
+</style>
+</head>
+<body>
+<div class="grass" aria-hidden="true"></div>
+<div class="wrap">
+
+<header>
+  <div class="tools" id="tools" aria-hidden="true"></div>
+  <div class="hbox">
+    <h1><span class="j">JAVA</span><span class="v">vs</span><span class="b">BEDROCK</span></h1>
+    <p>Две версии Minecraft — и одна покупка. Разберёмся, чем они отличаются и какая нужна именно вам.</p>
+  </div>
+</header>
+
+<section class="panel" aria-labelledby="t1">
+  <h2 id="t1">Коротко о главном</h2>
+  <div class="duo">
+    <div class="card java">
+      <h3>Java Edition</h3>
+      <ul>
+        <li>Только ПК: Windows, macOS, Linux</li>
+        <li>Огромное сообщество модов и классические серверы</li>
+        <li>Бесплатные скины и ресурспаки со всего интернета</li>
+        <li>Тот самый «старый» бой с кулдауном атаки</li>
+      </ul>
+    </div>
+    <div class="card bedrock">
+      <h3>Bedrock Edition</h3>
+      <ul>
+        <li>ПК, Xbox, PlayStation, Switch, телефоны и планшеты</li>
+        <li>Кроссплей: друзья заходят с любой платформы</li>
+        <li>Обычно плавнее идёт на слабых устройствах</li>
+        <li>Дополнения и скины — через Marketplace (часть платная)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="panel" aria-labelledby="t2">
+  <h2 id="t2">Сравнение: выберите версию</h2>
+  <div class="tabs" role="tablist" aria-label="Версия Minecraft">
+    <button class="btn" role="tab" id="tj" aria-selected="true" data-v="java">Java</button>
+    <button class="btn" role="tab" id="tb" aria-selected="false" data-v="bedrock">Bedrock</button>
+  </div>
+  <div class="card" id="spec" role="tabpanel" aria-live="polite"></div>
+  <p style="margin:10px 0 0;font-size:16px">Цены и состав комплекта проверяйте в официальном магазине.</p>
+</section>
+
+<section class="panel" aria-labelledby="t3">
+  <h2 id="t3">Что купить мне?</h2>
+  <div id="wiz"><p class="q">Где будете играть? Нажмите, и откроется страница покупки.</p><div class="opts"><a class="btn" href="https://www.microsoft.com/store/productId/9NXP44L49SHJ" target="_blank" rel="noopener">Компьютер: Microsoft Store</a><a class="btn" href="https://store.playstation.com/concept/212779" target="_blank" rel="noopener">Консоль: PlayStation Store</a><a class="btn" href="https://play.google.com/store/apps/details?id=com.mojang.minecraftpe" target="_blank" rel="noopener">Телефон (Android): Google Play</a></div><p style="margin:14px 0 0;font-size:16px">В Microsoft Store продаётся комплект Java и Bedrock для ПК. Ссылки открываются в новой вкладке.</p></div>
+</section>
+
+<footer>Фан-сайт. Minecraft — торговая марка Mojang Studios и Microsoft, мы с ними не связаны.</footer>
+</div>
+
+<script>
+(function(){
+  var P={
+    D:'#3a3f45',I:'#d4dadf',H:'#8d969d',S:'#9a6a35',B:'#5a3a18',C:'#38e0d0',K:'#16707a',W:'#e2fffb',G:'#f0c530',F:'#a37a1c'
+  };
+  var SPR={
+    pick:["...DDDDDDDDDD...","..DIIIIIIIIIID..",".DIID..SB..DIID.","DID....SB....DID","DD.....SB.....DD",".......SB.......",".......SB.......",".......SB.......",".......SB.......",".......SB.......",".......SB.......",".......SB.......",".......SB.......",".......SB.......",".......SB.......",".......SB......."],
+    axe:["....DDDDDD......","...DIIIIIIDD....","..DIIIIIIIIID...","..DIIIIIISBDD...","..DDIIIIDSB.....","....DDDDDSB.....",".........SB.....",".........SB.....",".........SB.....",".........SB.....",".........SB.....",".........SB.....",".........SB.....",".........SB.....",".........SB.....",".........SB....."],
+    sword:[".......KK.......","......KCWK......","......KCWK......","......KCWK......","......KCWK......","......KCWK......","......KCWK......","......KCWK......","......KCWK......","......KCWK......","....GGGGGGGG....","....FFFFFFFF....",".......SB.......",".......SB.......",".......SB.......","......FGGF......"]
+  };
+  function svg(m,flip,rot){
+    var r='',y,x,c;
+    for(y=0;y<16;y++)for(x=0;x<16;x++){c=m[y][x];if(c!=='.'&&P[c])r+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="'+P[c]+'"/>';}
+    return r;
+  }
+  var items=[['pick',10,0,1],['axe',30,0,1],['sword',50,0,1],['axe',70,0,-1],['pick',90,0,-1]];
+  var html='';
+  items.forEach(function(it){
+    html+='<svg viewBox="0 0 16 16" style="left:'+it[1]+'%;margin-left:calc(var(--s)*-.5);transform:rotate('+it[2]+'deg) scaleX('+it[3]+')">'+svg(SPR[it[0]])+'</svg>';
+  });
+  document.getElementById('tools').innerHTML=html;
+
+  /* wizard */
+  var DATA={
+    java:{c:'java',t:'Java Edition',r:[['Платформы','Windows, macOS, Linux'],['Покупка','На ПК продаётся комплектом с Bedrock в Microsoft Store'],['Кроссплей','Только между ПК с Java'],['Моды','Forge, Fabric, NeoForge — тысячи бесплатных модов'],['Серверы','Крупные классические серверы и мини-игры; свой сервер запустить легко'],['Производительность','Тяжелее; помогают оптимизирующие моды'],['Графика','Шейдеры через моды'],['Бой','Кулдаун атаки: важен ритм ударов'],['Редстоун','Свои правила; многие схемы не переносятся в Bedrock'],['Скины и текстуры','Любые, бесплатно, из интернета']]},
+    bedrock:{c:'bedrock',t:'Bedrock Edition',r:[['Платформы','Windows, Xbox, PlayStation, Switch, iOS, Android'],['Покупка','На ПК — в комплекте с Java; на консолях и телефонах покупается отдельно в магазине платформы'],['Кроссплей','Между ПК, консолями и телефонами'],['Моды','Аддоны и наборы из Marketplace; выбор скромнее'],['Серверы','Realms и популярные мини-игровые серверы; их меньше'],['Производительность','Обычно выше FPS на слабом железе'],['Графика','Улучшенная графика и шейдеры на поддерживаемых устройствах'],['Бой','Без кулдауна: быстрее и проще'],['Редстоун','Другие правила; схемы из Java часто не работают'],['Скины и текстуры','В основном через Marketplace']]}
+  };
+  var spec=document.getElementById('spec');
+  function showV(v){
+    var d=DATA[v],h='<h3 style="margin:0">'+d.t+'</h3>';
+    d.r.forEach(function(x){h+='<dl class="row" style="margin:0"><dt>'+x[0]+'</dt><dd>'+x[1]+'</dd></dl>';});
+    spec.className='card '+d.c;spec.innerHTML=h;
+    ['java','bedrock'].forEach(function(k){document.getElementById(k==='java'?'tj':'tb').setAttribute('aria-selected',k===v);});
+  }
+  document.querySelector('.tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(b)showV(b.getAttribute('data-v'));});
+  showV('java');
+  var w=document.getElementById('wiz');
+  var R={
+    bedrock_dev:{t:'Bedrock',c:'#3b78c9',d:'Java на консолях и телефонах не выходит. Берите Bedrock в магазине вашей платформы: он работает с друзьями на других устройствах.'},
+    java:{t:'Java',c:'#d2662b',d:'Вам нужны моды и классические серверы. На ПК комплект включает обе версии, так что Bedrock останется в запасе.'},
+    bedrock_pc:{t:'Bedrock (в комплекте с Java)',c:'#3b78c9',d:'Играть с друзьями на консолях и телефонах можно только в Bedrock. На ПК обе версии идут одним комплектом, поэтому отдельно платить не придётся.'},
+    both:{t:'Комплект для ПК',c:'#5fa83a',d:'Покупайте комплект: в нём Java и Bedrock. Попробуете обе и оставите ту, что понравится больше.'}
+  };
+  function step1(){
+    w.innerHTML='<p class="q">На чём вы будете играть?</p><div class="opts"><button class="btn" data-a="pc">Компьютер</button><button class="btn" data-a="con">Консоль</button><button class="btn" data-a="ph">Телефон или планшет</button></div>';
+  }
+  function step2(){
+    w.innerHTML='<p class="q">Что для вас важнее?</p><div class="opts"><button class="btn" data-a="mods">Моды и большие серверы</button><button class="btn" data-a="friends">Друзья на консолях и телефонах</button><button class="btn" data-a="idk">Пока не знаю</button></div>';
+  }
+  function show(k){
+    var r=R[k];
+    w.innerHTML='<div class="res on"><span class="tag" style="background:'+r.c+'">Ваш выбор</span><h3 style="margin-top:12px">'+r.t+'</h3><p style="margin:0">'+r.d+'</p></div><button class="btn reset" data-a="reset">Пройти заново</button>';
+  }
+  w.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;
+    var a=b.getAttribute('data-a');
+    if(a==='pc')step2();
+    else if(a==='con'||a==='ph')show('bedrock_dev');
+    else if(a==='mods')show('java');
+    else if(a==='friends')show('bedrock_pc');
+    else if(a==='idk')show('both');
+    else if(a==='reset')step1();
+  });
+})();
+</script>
+</body>
+</html>
